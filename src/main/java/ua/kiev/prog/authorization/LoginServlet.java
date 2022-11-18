@@ -1,4 +1,4 @@
-package ua.kiev.prog.registration;
+package ua.kiev.prog.authorization;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -8,8 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
-public class RegistrationServlet extends HttpServlet {
-
+public class LoginServlet extends HttpServlet {
     private static final Map<String, String> userList = UsersList.getInstance();
 
     @Override
@@ -18,11 +17,9 @@ public class RegistrationServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         if (userList.containsKey(login)) {
-            resp.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
-
-        } else {
-            userList.put(login, password);
-            resp.setStatus(HttpServletResponse.SC_CREATED);
-        }
+            if (userList.get(login).equals(password)) {
+                resp.setStatus(HttpServletResponse.SC_OK);
+            } else resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        } else resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
     }
 }

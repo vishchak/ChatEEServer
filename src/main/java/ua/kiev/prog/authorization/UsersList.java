@@ -1,4 +1,4 @@
-package ua.kiev.prog.registration;
+package ua.kiev.prog.authorization;
 
 import java.util.HashMap;
 
